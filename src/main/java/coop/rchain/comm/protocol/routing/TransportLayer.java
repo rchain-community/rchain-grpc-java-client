@@ -2,28 +2,22 @@ package coop.rchain.comm.protocol.routing;
 
 import coop.rchain.AbstractClient;
 import io.grpc.Channel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
 public class TransportLayer extends AbstractClient {
 
-
-    TransportLayer(Builder builder) {
+    private TransportLayer(Builder builder) {
         super(builder);
     }
 
     public TransportLayer(Channel channel) {
-        this(new TransportLayer.Builder(TransportLayerGrpc.newBlockingStub(channel), TransportLayerGrpc.newStub(channel)));
-    }
-
-    public TransportLayer(String target) {
-        this(ManagedChannelBuilder.forTarget(target).build());
+        this(new TransportLayer.Builder(channel));
     }
 
     public static final class Builder extends AbstractClient.Builder<TransportLayerGrpc.TransportLayerBlockingStub,
             TransportLayerGrpc.TransportLayerStub> {
-        public Builder(TransportLayerGrpc.TransportLayerBlockingStub blockingStub, TransportLayerGrpc.TransportLayerStub asyncStub) {
-            super(blockingStub, asyncStub);
+        public Builder(Channel channel) {
+            super(TransportLayerGrpc.newBlockingStub(channel), TransportLayerGrpc.newStub(channel));
         }
 
         @Override

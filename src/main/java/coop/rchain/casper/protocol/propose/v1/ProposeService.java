@@ -3,26 +3,21 @@ package coop.rchain.casper.protocol.propose.v1;
 import coop.rchain.AbstractClient;
 import coop.rchain.casper.protocol.ProposeServiceCommon;
 import io.grpc.Channel;
-import io.grpc.ManagedChannelBuilder;
 
 public class ProposeService extends AbstractClient {
 
-    ProposeService(Builder builder) {
+    private ProposeService(Builder builder) {
         super(builder);
     }
 
     public ProposeService(Channel channel) {
-        this(new Builder(ProposeServiceGrpc.newBlockingStub(channel), ProposeServiceGrpc.newStub(channel)));
-    }
-
-    public ProposeService(String target) {
-        this(ManagedChannelBuilder.forTarget(target).build());
+        this(new Builder(channel));
     }
 
     public static final class Builder extends AbstractClient.Builder<ProposeServiceGrpc.ProposeServiceBlockingStub,
             ProposeServiceGrpc.ProposeServiceStub> {
-        public Builder(ProposeServiceGrpc.ProposeServiceBlockingStub blockingStub, ProposeServiceGrpc.ProposeServiceStub asyncStub) {
-            super(blockingStub, asyncStub);
+        public Builder(Channel channel) {
+            super(ProposeServiceGrpc.newBlockingStub(channel), ProposeServiceGrpc.newStub(channel));
         }
 
         @Override

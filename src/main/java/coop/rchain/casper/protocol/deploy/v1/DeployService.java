@@ -4,29 +4,23 @@ import coop.rchain.AbstractClient;
 import coop.rchain.casper.protocol.CasperMessage;
 import coop.rchain.casper.protocol.DeployServiceCommon;
 import io.grpc.Channel;
-import io.grpc.ManagedChannelBuilder;
 
 import java.util.Iterator;
 
 public class DeployService extends AbstractClient {
 
-
-    DeployService(Builder builder) {
+    private DeployService(Builder builder) {
         super(builder);
     }
 
     public DeployService(Channel channel) {
-        this(new DeployService.Builder(DeployServiceGrpc.newBlockingStub(channel), DeployServiceGrpc.newStub(channel)));
-    }
-
-    public DeployService(String target) {
-        this(ManagedChannelBuilder.forTarget(target).build());
+        this(new DeployService.Builder(channel));
     }
 
     public static final class Builder extends AbstractClient.Builder<DeployServiceGrpc.DeployServiceBlockingStub,
             DeployServiceGrpc.DeployServiceStub> {
-        public Builder(DeployServiceGrpc.DeployServiceBlockingStub blockingStub, DeployServiceGrpc.DeployServiceStub asyncStub) {
-            super(blockingStub, asyncStub);
+        public Builder(Channel channel) {
+            super(DeployServiceGrpc.newBlockingStub(channel), DeployServiceGrpc.newStub(channel));
         }
 
         @Override
