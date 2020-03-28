@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>coop.rchain.grpc</groupId>
-    <artifactId>rchain-grpc-java-client</artifactId>
+    <artifactId>rchain-grpc-api</artifactId>
+    <name>RChain gRPC API</name>
     <version>0.0.1</version>
     <packaging>jar</packaging>
 
